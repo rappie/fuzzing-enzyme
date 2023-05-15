@@ -22,6 +22,7 @@ contract EchidnaHelper is EchidnaSetup {
         AddressListRegistry.UpdateType listType,
         address[] memory initialData
     ) internal {
+        require(registry.getListCount() < 10, "Too many lists");
         registry.createList(owner, listType, initialData);
     }
 

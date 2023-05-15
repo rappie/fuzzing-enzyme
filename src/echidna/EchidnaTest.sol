@@ -36,6 +36,8 @@ contract EchidnaTest is EchidnaSetup, EchidnaHelper, EchidnaDebug {
         address[] memory _initialData,
         bool startEmpty
     ) public {
+        require(registry.getListCount() < 10, "Too many lists");
+
         AddressListRegistry.UpdateType listType = _getListType(_listType % 4);
         address[] memory initialData = startEmpty
             ? new address[](0)
