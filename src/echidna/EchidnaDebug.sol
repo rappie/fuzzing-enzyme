@@ -8,8 +8,19 @@ contract EchidnaDebug is EchidnaHelper {
 
     // bool debug = false;
 
-    function debugEchidna() public {
-        require(debug);
+    function debugCreateList() public {
+        registry.createList(
+            address(this),
+            AddressListRegistry.UpdateType.AddOnly,
+            new address[](0)
+        );
+
+        Debugger.log("done");
         assert(false);
     }
+
+    // function debugEchidna() public {
+    //     require(debug);
+    //     assert(false);
+    // }
 }
