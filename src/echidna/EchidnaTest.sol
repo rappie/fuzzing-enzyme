@@ -77,4 +77,25 @@ contract EchidnaTest is EchidnaSetup, EchidnaHelper, EchidnaDebug {
             assert(false);
         }
     }
+
+    function testViewFunctions(uint256 listId, address[] memory items) public {
+        uint256[] memory listIds = new uint256[](1);
+        listIds[0] = listId;
+
+        if (registry.areAllInList(listId, items)) {
+            for (uint256 i = 0; i < items.length; i++) {
+                assert(registry.isInAllLists(listIds, items[i]));
+            }
+
+            assert(registry.areAllInAllLists(listIds, items));
+            assert(registry.areAllInSomeOfLists(listIds, items));
+        } else if (registry.areAllInSomeOfLists(listIds, items)) {
+            for (uint256 i = 0; i < items.length; i++) {
+                assert(registry.isInSomeOfLists(listIds, items[i]));
+            }
+        } else {
+            registry.areAllNotInList(listId, items);
+            registry.areAllNotInAnyOfLists(listIds, items);
+        }
+    }
 }
