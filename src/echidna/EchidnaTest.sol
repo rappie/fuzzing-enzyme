@@ -21,6 +21,20 @@ contract EchidnaTest is EchidnaSetup, EchidnaHelper, EchidnaDebug {
         }
     }
 
+    function testRemoveFromList(uint256 listId, address[] memory items) public {
+        uint256 listCountBefore = registry.getListCount();
+        removeFromList(listId, items);
+        uint256 listCountAfter = registry.getListCount();
+
+        if (items.length == 0) {
+            assert(listCountAfter == listCountBefore);
+        } else if (registry.areAllNotInList(listId, items)) {
+            assert(listCountAfter == listCountBefore);
+        } else {
+            assert(listCountAfter < listCountBefore);
+        }
+    }
+
     function testCreateList(
         address owner,
         uint8 _listType,
