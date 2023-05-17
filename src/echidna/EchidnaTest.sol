@@ -9,7 +9,7 @@ import "./Tools.sol";
 contract EchidnaTest is EchidnaSetup, EchidnaHelper, EchidnaDebug {
     function testAddToList(uint256 listId, address[] memory items) public {
         uint256 listCountBefore = registry.getListCount();
-        registry.addToList(listId, items);
+        addToList(listId, items);
         uint256 listCountAfter = registry.getListCount();
 
         if (items.length == 0) {
