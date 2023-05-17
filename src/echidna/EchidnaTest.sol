@@ -36,7 +36,6 @@ contract EchidnaTest is EchidnaSetup, EchidnaHelper, EchidnaDebug {
     }
 
     function testCreateList(
-        address owner,
         uint8 _listType,
         address[] memory _initialData,
         bool startEmpty
@@ -44,7 +43,7 @@ contract EchidnaTest is EchidnaSetup, EchidnaHelper, EchidnaDebug {
         uint256 listId = registry.getListCount();
 
         uint256 listCountBefore = registry.getListCount();
-        createList(owner, _listType, _initialData, startEmpty);
+        createList(_listType, _initialData, startEmpty);
         uint256 listCountAfter = registry.getListCount();
 
         assert(listCountAfter == listCountBefore + 1);
@@ -59,7 +58,6 @@ contract EchidnaTest is EchidnaSetup, EchidnaHelper, EchidnaDebug {
     }
 
     function testCreateListShouldNotRevert(
-        address owner,
         uint8 _listType,
         address[] memory _initialData,
         bool startEmpty
@@ -71,7 +69,7 @@ contract EchidnaTest is EchidnaSetup, EchidnaHelper, EchidnaDebug {
             ? new address[](0)
             : _initialData;
 
-        try registry.createList(owner, listType, initialData) {
+        try registry.createList(address(this), listType, initialData) {
             assert(true);
         } catch {
             assert(false);

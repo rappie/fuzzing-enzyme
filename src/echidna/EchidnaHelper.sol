@@ -15,7 +15,6 @@ contract EchidnaHelper is EchidnaSetup {
     }
 
     function createList(
-        address owner,
         uint8 _listType,
         address[] memory _initialData,
         bool startEmpty
@@ -25,16 +24,15 @@ contract EchidnaHelper is EchidnaSetup {
             ? new address[](0)
             : _initialData;
 
-        createList(owner, listType, initialData);
+        createList(listType, initialData);
     }
 
     function createList(
-        address owner,
         AddressListRegistry.UpdateType listType,
         address[] memory initialData
     ) internal {
         require(registry.getListCount() < 10, "Too many lists");
-        registry.createList(owner, listType, initialData);
+        registry.createList(address(this), listType, initialData);
     }
 
     function _getListType(uint8 _listType)
