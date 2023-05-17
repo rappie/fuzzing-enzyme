@@ -21,6 +21,32 @@ contract EchidnaTest is EchidnaSetup, EchidnaHelper, EchidnaDebug {
         }
     }
 
+    function testAddToListShouldNotRevert(
+        uint256 listId,
+        address[] memory items
+    ) public {
+        listId = listId % registry.getListCount();
+        Debugger.log("listId", listId);
+
+        require(listId != 0, "List 0 is reserved");
+        require(
+            registry.getListUpdateType(listId) !=
+                AddressListRegistry.UpdateType.None,
+            "List is not updatable"
+        );
+        require(
+            registry.getListUpdateType(listId) !=
+                AddressListRegistry.UpdateType.RemoveOnly,
+            "List is not updatable"
+        );
+
+        try registry.addToList(listId, items) {
+            assert(true);
+        } catch {
+            assert(false);
+        }
+    }
+
     function testRemoveFromList(uint256 listId, address[] memory items) public {
         uint256 listCountBefore = registry.getListCount();
         removeFromList(listId, items);
