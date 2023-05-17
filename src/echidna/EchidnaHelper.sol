@@ -9,6 +9,11 @@ contract EchidnaHelper is EchidnaSetup {
         registry.addToList(listId, items);
     }
 
+    function removeFromList(uint256 listId, address[] memory items) public {
+        listId = listId % registry.getListCount();
+        registry.removeFromList(listId, items);
+    }
+
     function createList(
         address owner,
         uint8 _listType,
