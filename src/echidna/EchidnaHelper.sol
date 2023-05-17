@@ -3,6 +3,12 @@
 import "./EchidnaSetup.sol";
 
 contract EchidnaHelper is EchidnaSetup {
+
+    function addToList(uint256 listId, address[] memory items) public {
+        listId = listId % registry.getListCount();
+        registry.addToList(listId, items);
+    }
+
     function createList(
         address owner,
         uint8 _listType,
