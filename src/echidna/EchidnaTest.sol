@@ -7,6 +7,20 @@ import "./Debugger.sol";
 import "./Tools.sol";
 
 contract EchidnaTest is EchidnaSetup, EchidnaHelper, EchidnaDebug {
+    function testAddToList(uint256 listId, address[] memory items) public {
+        uint256 listCountBefore = registry.getListCount();
+        registry.addToList(listId, items);
+        uint256 listCountAfter = registry.getListCount();
+
+        if (items.length == 0) {
+            assert(listCountAfter == listCountBefore);
+        } else if (registry.areAllInList(listId, items)) {
+            assert(listCountAfter == listCountBefore);
+        } else {
+            assert(listCountAfter > listCountBefore);
+        }
+    }
+
     function testCreateList(
         address owner,
         uint8 _listType,
